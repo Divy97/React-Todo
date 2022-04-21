@@ -6,7 +6,7 @@ export default (state, action) => {
             return[...state, action.payload];
             break;
         case REMOVE_TODO:
-            return stste.filter(todo => todo.id !== action.payload)
+            return state.filter(todo => todo.id !== action.payload)
             break;
         default:
             return state;

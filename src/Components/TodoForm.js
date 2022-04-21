@@ -9,11 +9,36 @@ import {
 
 import {v4} from "uuid";
 import {TodoContext} from "../Context/TodoContext";
-import {ADD_TOOD} from "../Context/action.types";
+import {ADD_TODO, ADD_TOOD} from "../Context/action.types";
 
 const TodoForm = () => {
+
+    const [todoString, setTodoString] = useState("");
+    const {dispatch} = useContext(TodoContext);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (todoString === ""){
+            return alert("Please Enter A Todo");
+        }
+
+        const todo = {
+            todoString,
+            id: v4()
+        }
+
+        dispatch({
+            type: ADD_TODO,
+            payload: todo
+
+        })
+
+        setTodoString("");
+    };
+
+
     return(
-       <Form>
+       <Form onSubmit={handleSubmit}>
            <FormGroup>
                <InputGroup>
                <Input
@@ -21,8 +46,8 @@ const TodoForm = () => {
                 name="todo"
                 id="todo"
                 placeholder="Your Next Todo"
-                // value
-                // onchange
+                value={todoString} 
+                onChange={event => setTodoString(event.target.value)}
                />
                 <Button
                     color="warning"
